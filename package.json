@@ -32,7 +32,7 @@
   },
   "keywords": [],
   "author": "Toru Nagashima (https://github.com/mysticatea)",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/eslint/eslint-visitor-keys/issues"
   },
