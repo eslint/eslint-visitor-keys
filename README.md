@@ -52,7 +52,12 @@ This will be used to traverse unknown nodes.
 For example:
 
 ```
-console.log(evk.getKeys()) // → ["left", "right"]
+const node = {
+    type: "AssignmentExpression",
+    left: { type: "Identifier", name: "foo" },
+    right: { type: "Literal", value: 0 }
+}
+console.log(evk.getKeys(node)) // → ["type", "left", "right"]
 ```
 
 ### evk.unionWith(additionalKeys)
@@ -61,12 +66,15 @@ console.log(evk.getKeys()) // → ["left", "right"]
 
 Make the union set with `evk.KEYS` and the given keys.
 
+- The order of keys is, `additionalKeys` is at first, then `evk.KEYS` is concatenated after that.
+- It removes duplicated keys as keeping the first one.
+
 For example:
 
 ```
 console.log(evk.unionWith({
     MethodDefinition: ["decorators"]
-})) // → { ..., MethodDefinition: ["key", "value", "decorators"], ... }
+})) // → { ..., MethodDefinition: ["decorators", "key", "value"], ... }
 ```
 
 ## 📰 Change log

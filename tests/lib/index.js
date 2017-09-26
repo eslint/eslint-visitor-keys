@@ -40,7 +40,7 @@ describe("eslint-visitor-keys", () => {
     });
 
     describe("unionWith()", () => {
-        const additionalKeys = { Program: ["body", "a"], AssignmentExpression: ["b"], additional: ["c"] };
+        const additionalKeys = { Program: ["body", "a"], AssignmentExpression: ["b"], additional: ["c"], MethodDefinition: ["a", "key", "b"] };
         const unionKeys = evk.unionWith(additionalKeys);
 
         it("should include all keys of lib/visitor-keys.json", () => {
@@ -61,6 +61,10 @@ describe("eslint-visitor-keys", () => {
 
         it("should not have duplicate", () => {
             assert(unionKeys.Program.filter(key => key === "body").length === 1);
+        });
+
+        it("should add additional keys, then concatenate original keys", () => {
+            assert.deepStrictEqual(unionKeys.MethodDefinition, ["a", "key", "b", "value"]);
         });
     });
 });
