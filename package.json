@@ -26,10 +26,7 @@
     "release": "eslint-release",
     "ci-release": "eslint-ci-release"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/eslint/eslint-visitor-keys.git"
-  },
+  "repository": "eslint/eslint-visitor-keys",
   "keywords": [],
   "author": "Toru Nagashima (https://github.com/mysticatea)",
   "license": "Apache-2.0",
