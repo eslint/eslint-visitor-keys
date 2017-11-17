@@ -1,6 +1,6 @@
 {
   "name": "eslint-visitor-keys",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Constants and utilities about visitor keys to traverse AST.",
   "main": "lib/index.js",
   "files": [
