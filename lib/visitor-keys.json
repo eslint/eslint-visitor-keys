@@ -151,9 +151,6 @@
     "JSXExpressionContainer": [
         "expression"
     ],
-    "JSXSpreadChild": [
-        "expression"
-    ],
     "JSXIdentifier": [],
     "JSXMemberExpression": [
         "object",
@@ -176,8 +173,6 @@
         "children",
         "closingFragment"
     ],
-    "JSXOpeningFragment": [],
-    "JSXClosingFragment": [],
     "Literal": [],
     "LabeledStatement": [
         "label",
