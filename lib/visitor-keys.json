@@ -83,6 +83,12 @@
     "ExpressionStatement": [
         "expression"
     ],
+    "ExperimentalRestProperty": [
+        "argument"
+    ],
+    "ExperimentalSpreadProperty": [
+        "argument"
+    ],
     "ForStatement": [
         "init",
         "test",
