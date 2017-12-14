@@ -60,7 +60,6 @@
         "label"
     ],
     "DebuggerStatement": [],
-    "DirectiveStatement": [],
     "DoWhileStatement": [
         "body",
         "test"
@@ -151,7 +150,6 @@
         "key",
         "value"
     ],
-    "ModuleSpecifier": [],
     "NewExpression": [
         "callee",
         "arguments"
