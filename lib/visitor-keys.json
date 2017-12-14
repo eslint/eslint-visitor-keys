@@ -129,6 +129,49 @@
         "imported",
         "local"
     ],
+    "JSXAttribute": [
+        "name",
+        "value"
+    ],
+    "JSXClosingElement": [
+        "name"
+    ],
+    "JSXElement": [
+        "openingElement",
+        "children",
+        "closingElement"
+    ],
+    "JSXEmptyExpression": [],
+    "JSXExpressionContainer": [
+        "expression"
+    ],
+    "JSXSpreadChild": [
+        "expression"
+    ],
+    "JSXIdentifier": [],
+    "JSXMemberExpression": [
+        "object",
+        "property"
+    ],
+    "JSXNamespacedName": [
+        "namespace",
+        "name"
+    ],
+    "JSXOpeningElement": [
+        "name",
+        "attributes"
+    ],
+    "JSXSpreadAttribute": [
+        "argument"
+    ],
+    "JSXText": [],
+    "JSXFragment": [
+        "openingFragment",
+        "children",
+        "closingFragment"
+    ],
+    "JSXOpeningFragment": [],
+    "JSXClosingFragment": [],
     "Literal": [],
     "LabeledStatement": [
         "label",
