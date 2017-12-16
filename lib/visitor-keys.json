@@ -60,7 +60,6 @@
         "label"
     ],
     "DebuggerStatement": [],
-    "DirectiveStatement": [],
     "DoWhileStatement": [
         "body",
         "test"
@@ -83,6 +82,12 @@
     ],
     "ExpressionStatement": [
         "expression"
+    ],
+    "ExperimentalRestProperty": [
+        "argument"
+    ],
+    "ExperimentalSpreadProperty": [
+        "argument"
     ],
     "ForStatement": [
         "init",
@@ -130,6 +135,44 @@
         "imported",
         "local"
     ],
+    "JSXAttribute": [
+        "name",
+        "value"
+    ],
+    "JSXClosingElement": [
+        "name"
+    ],
+    "JSXElement": [
+        "openingElement",
+        "children",
+        "closingElement"
+    ],
+    "JSXEmptyExpression": [],
+    "JSXExpressionContainer": [
+        "expression"
+    ],
+    "JSXIdentifier": [],
+    "JSXMemberExpression": [
+        "object",
+        "property"
+    ],
+    "JSXNamespacedName": [
+        "namespace",
+        "name"
+    ],
+    "JSXOpeningElement": [
+        "name",
+        "attributes"
+    ],
+    "JSXSpreadAttribute": [
+        "argument"
+    ],
+    "JSXText": [],
+    "JSXFragment": [
+        "openingFragment",
+        "children",
+        "closingFragment"
+    ],
     "Literal": [],
     "LabeledStatement": [
         "label",
@@ -151,7 +194,6 @@
         "key",
         "value"
     ],
-    "ModuleSpecifier": [],
     "NewExpression": [
         "callee",
         "arguments"
