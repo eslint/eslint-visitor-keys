@@ -1,3 +1,7 @@
+v1.0.0 - December 18, 2017
+
+* 1f6bd38 Breaking: update keys (#4) (Toru Nagashima)
+
 v0.1.0 - November 17, 2017
 
 * 17b4a88 Chore: update `repository` field in package.json (#3) (Toru Nagashima)
