@@ -148,7 +148,8 @@
     "JSXElement": [
         "openingElement",
         "children",
-        "closingElement"
+        "closingElement",
+        "attributes"
     ],
     "JSXEmptyExpression": [],
     "JSXExpressionContainer": [
