@@ -20,7 +20,6 @@
   },
   "scripts": {
     "lint": "eslint lib tests/lib",
-    "pretest": "npm run -s lint",
     "test": "nyc mocha tests/lib",
     "coverage": "nyc report --reporter lcov && opener coverage/lcov-report/index.html",
     "generate-release": "eslint-generate-release",
