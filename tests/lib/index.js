@@ -2,11 +2,9 @@
  * @author Toru Nagashima <https://github.com/mysticatea>
  * See LICENSE file in root directory for full license.
  */
-"use strict";
-
-const assert = require("assert");
-const fs = require("fs");
-const evk = require("../..");
+import assert from "assert";
+import fs from "fs";
+import evk from "../../lib/index.js";
 
 const keys = JSON.parse(fs.readFileSync("lib/visitor-keys.json", "utf8"));
 

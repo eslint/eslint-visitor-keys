@@ -22,7 +22,7 @@ $ npm install eslint-visitor-keys
 ## 📖 Usage
 
 ```js
-const evk = require("eslint-visitor-keys")
+import evk from "eslint-visitor-keys"
 ```
 
 ### evk.KEYS
