@@ -5,8 +5,11 @@
   "type": "module",
   "main": "lib/index.js",
   "exports": {
-    "import": "./lib/index.js",
-    "require": "./dist/eslint-visitor-keys.cjs"
+    ".": {
+      "import": "./lib/index.js",
+      "require": "./dist/eslint-visitor-keys.cjs"
+    },
+    "./package.json": "./package.json"
   },
   "files": [
     "dist",
