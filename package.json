@@ -9,6 +9,7 @@
     "require": "./dist/eslint-visitor-keys.cjs"
   },
   "files": [
+    "dist",
     "lib"
   ],
   "engines": {
