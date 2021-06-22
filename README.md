@@ -21,8 +21,16 @@ $ npm install eslint-visitor-keys
 
 ## 📖 Usage
 
+To use in an ESM file:
+
 ```js
 import evk from "eslint-visitor-keys"
+```
+
+To use in a CommonJS file:
+
+```js
+const evk = require("eslint-visitor-keys")
 ```
 
 ### evk.KEYS
