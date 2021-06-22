@@ -5,10 +5,14 @@
   "type": "module",
   "main": "dist/eslint-visitor-keys.cjs",
   "exports": {
-    ".": {
-      "import": "./lib/index.js",
-      "require": "./dist/eslint-visitor-keys.cjs"
-    },
+    ".": [
+      {
+        "import": "./lib/index.js",
+        "require": "./dist/eslint-visitor-keys.cjs",
+        "default": "./dist/eslint-visitor-keys.cjs"
+      },
+      "./dist/eslint-visitor-keys.cjs"
+    ],
     "./package.json": "./package.json"
   },
   "files": [
