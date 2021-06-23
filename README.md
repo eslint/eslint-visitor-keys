@@ -24,7 +24,7 @@ $ npm install eslint-visitor-keys
 To use in an ESM file:
 
 ```js
-import evk from "eslint-visitor-keys"
+import * as evk from "eslint-visitor-keys"
 ```
 
 To use in a CommonJS file:
