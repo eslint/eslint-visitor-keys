@@ -3,7 +3,7 @@
  * See LICENSE file in root directory for full license.
  */
 import assert from "assert";
-import evk from "../../lib/index.js";
+import * as evk from "../../lib/index.js";
 import keys from "../../lib/visitor-keys.js";
 
 describe("eslint-visitor-keys", () => {
