@@ -37,7 +37,7 @@
     "prepare": "npm run build",
     "build": "rollup -c",
     "lint": "eslint .",
-    "test": "c8 mocha tests/lib",
+    "test": "mocha tests/lib/**/*.cjs && c8 mocha tests/lib/**/*.js",
     "coverage": "c8 report --reporter lcov && opener coverage/lcov-report/index.html",
     "generate-release": "eslint-generate-release",
     "generate-alpharelease": "eslint-generate-prerelease alpha",
