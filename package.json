@@ -16,7 +16,7 @@
     "./package.json": "./package.json"
   },
   "files": [
-    "dist",
+    "dist/eslint-visitor-keys.cjs",
     "lib"
   ],
   "engines": {
