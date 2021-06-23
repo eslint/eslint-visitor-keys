@@ -15,5 +15,5 @@
             }
         }
     ],
-    "ignorePatterns": "/dist"
+    "ignorePatterns": ["/dist", "/coverage"]
 }
