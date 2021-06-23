@@ -8,8 +8,7 @@
     ".": [
       {
         "import": "./lib/index.js",
-        "require": "./dist/eslint-visitor-keys.cjs",
-        "default": "./dist/eslint-visitor-keys.cjs"
+        "require": "./dist/eslint-visitor-keys.cjs"
       },
       "./dist/eslint-visitor-keys.cjs"
     ],
