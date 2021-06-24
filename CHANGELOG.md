@@ -1,3 +1,10 @@
+v3.0.0 - June 24, 2021
+
+* [`701b67d`](https://github.com/eslint/eslint-visitor-keys/commit/701b67de7216cabebc03e7c6205fe47ce3177aa3) Breaking: drop node v10/v13/v15 (refs eslint/eslint#14023) (#23) (薛定谔的猫)
+* [`f584b12`](https://github.com/eslint/eslint-visitor-keys/commit/f584b121421ceb6c4e034b79943f3c32aaa0541d) Breaking: Switch to ESM (#24) (Brett Zamir)
+* [`7279e73`](https://github.com/eslint/eslint-visitor-keys/commit/7279e7304e95030a854408191b8fde3c01876451) Build: Update branch reference in CI (#25) (Milos Djermanovic)
+* [`c6846d6`](https://github.com/eslint/eslint-visitor-keys/commit/c6846d69271c73041b797b7de9c8254dcf439a2e) Upgrade: eslint-release (#21) (Nicholas C. Zakas)
+
 v2.1.0 - May 3, 2021
 
 * [`908fdf8`](https://github.com/eslint/eslint-visitor-keys/commit/908fdf8c0d9a352c696c8c1f4901280d1a0795f7) Update: add PrivateIdentifier and PropertyDefinition (#20) (Toru Nagashima)
