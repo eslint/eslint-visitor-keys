@@ -4,3 +4,4 @@
 /node_modules
 /test.*
 .eslint-release-info.json
+/dist

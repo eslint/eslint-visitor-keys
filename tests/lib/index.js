@@ -2,17 +2,13 @@
  * @author Toru Nagashima <https://github.com/mysticatea>
  * See LICENSE file in root directory for full license.
  */
-"use strict";
-
-const assert = require("assert");
-const fs = require("fs");
-const evk = require("../..");
-
-const keys = JSON.parse(fs.readFileSync("lib/visitor-keys.json", "utf8"));
+import assert from "assert";
+import * as evk from "../../lib/index.js";
+import keys from "../../lib/visitor-keys.js";
 
 describe("eslint-visitor-keys", () => {
     describe("KEYS", () => {
-        it("should be same as lib/visitor-keys.json", () => {
+        it("should be same as lib/visitor-keys.js", () => {
             assert.deepStrictEqual(evk.KEYS, keys);
         });
     });
@@ -43,7 +39,7 @@ describe("eslint-visitor-keys", () => {
         const additionalKeys = { Program: ["body", "a"], AssignmentExpression: ["b"], additional: ["c"], MethodDefinition: ["a", "key", "b"] };
         const unionKeys = evk.unionWith(additionalKeys);
 
-        it("should include all keys of lib/visitor-keys.json", () => {
+        it("should include all keys of lib/visitor-keys.js", () => {
             for (const type of Object.keys(keys)) {
                 for (const key of keys[type]) {
                     assert(unionKeys[type].indexOf(key) !== -1, `'${key}' should be included in '${type}'.`);

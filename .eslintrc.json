@@ -1,7 +1,19 @@
 {
     "extends": "eslint",
     "env": {
-        "es6": true,
-        "node": true
-    }
+        "es2020": true
+    },
+    "parserOptions": {
+        "sourceType": "module",
+        "ecmaVersion": 2020
+    },
+    "overrides": [
+        {
+            "files": ["*.cjs"],
+            "parserOptions": {
+                "sourceType": "script"
+            }
+        }
+    ],
+    "ignorePatterns": ["/dist", "/coverage"]
 }
