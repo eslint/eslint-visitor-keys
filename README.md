@@ -17,11 +17,7 @@ $ npm install eslint-visitor-keys
 
 ### Requirements
 
-Since eslint-visitor-keys v3:
-- [Node.js] 12.22.0 or 14.17.0 or later.
-
-Before:
-- [Node.js] 10.0.0 or later.
+- [Node.js] `^12.22.0`, `^14.17.0`, or `>=16.0.0`
 
 
 ## 📖 Usage
