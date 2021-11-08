@@ -1,3 +1,11 @@
+v3.1.0 - November 8, 2021
+
+* [`5e3e687`](https://github.com/eslint/eslint-visitor-keys/commit/5e3e68779560a1b2edef7923d30165396bce9602) build: upgrade eslint-release to v3.2.0 to support conventional commits (#31) (Milos Djermanovic)
+* [`53d3939`](https://github.com/eslint/eslint-visitor-keys/commit/53d39390d3560c179cffd08638b50343b0841a30) Build: add node v17 (#30) (唯然)
+* [`5f5b232`](https://github.com/eslint/eslint-visitor-keys/commit/5f5b232386bd7e217dd61d08aa27c3a1e2a4665e) Update: add StaticBlock (#29) (Milos Djermanovic)
+* [`e89bff9`](https://github.com/eslint/eslint-visitor-keys/commit/e89bff9fd6a5929b1e8f4d5f9cedec45aa966074) Chore: use actions/setup-node@v2 (薛定谔的猫)
+* [`7b756cd`](https://github.com/eslint/eslint-visitor-keys/commit/7b756cd37cd28089dfee6015c001fd860e21aead) Docs: Update the minimum Node.js version requirement (#26) (0uep)
+
 v3.0.0 - June 24, 2021
 
 * [`701b67d`](https://github.com/eslint/eslint-visitor-keys/commit/701b67de7216cabebc03e7c6205fe47ce3177aa3) Breaking: drop node v10/v13/v15 (refs eslint/eslint#14023) (#23) (薛定谔的猫)
