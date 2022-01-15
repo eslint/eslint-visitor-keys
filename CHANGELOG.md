@@ -1,3 +1,8 @@
+v3.2.0 - January 15, 2022
+
+* [`5c53218`](https://github.com/eslint/eslint-visitor-keys/commit/5c532184e05440d3c883b3d7864f84eb1b11dc90) feat: add missing JSXOpeningFragment and JSXClosingFragment (#33) (Richard Huang)
+* [`2a5c9a6`](https://github.com/eslint/eslint-visitor-keys/commit/2a5c9a622d8cb09df9d40a320d146b0941081e11) docs: readme add syntax highlighting (#32) (coderaiser)
+
 v3.1.0 - November 8, 2021
 
 * [`5e3e687`](https://github.com/eslint/eslint-visitor-keys/commit/5e3e68779560a1b2edef7923d30165396bce9602) build: upgrade eslint-release to v3.2.0 to support conventional commits (#31) (Milos Djermanovic)
