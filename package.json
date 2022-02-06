@@ -4,7 +4,7 @@
   "description": "Constants and utilities about visitor keys to traverse AST.",
   "type": "module",
   "main": "dist/eslint-visitor-keys.cjs",
-  "types": "./dist/eslint-visitor.keys.d.ts",
+  "types": "./dist/eslint-visitor-keys.d.ts",
   "exports": {
     ".": [
       {
@@ -16,7 +16,7 @@
     "./package.json": "./package.json"
   },
   "files": [
-    "dist/eslint-visitor.keys.d.ts",
+    "dist/eslint-visitor-keys.d.ts",
     "dist/eslint-visitor-keys.cjs",
     "lib"
   ],
