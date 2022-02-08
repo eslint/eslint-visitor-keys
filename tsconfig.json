@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "lib": ["es2020"],
-    "moduleResolution": "nodenext",
+    "moduleResolution": "node",
     "module": "esnext",
     "resolveJsonModule": true,
     "allowJs": true,
