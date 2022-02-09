@@ -1,4 +1,4 @@
-import {expectType, expectAssignable} from 'tsd';
+import { expectType, expectAssignable, expectError } from 'tsd';
 
 import { KEYS, getKeys, unionWith, KeysStrict, KeysStrictReadonly } from "../lib/index.js";
 
@@ -37,9 +37,33 @@ expectType<{readonly [type: string]: readonly string[]}>(unionWith({
     TestInterface2: ["expression"]
 }));
 
-expectAssignable<KeysStrict>({
+const keys: {
+    [type: string]: readonly string[]
+} = {
     TestInterface1: ["left", "right"]
-});
-expectAssignable<KeysStrictReadonly>({
+};
+
+const readonlyKeys: {
+    readonly [type: string]: readonly string[]
+} = {
     TestInterface1: ["left", "right"]
+};
+
+expectAssignable<KeysStrict>(keys);
+
+expectAssignable<KeysStrictReadonly>(readonlyKeys);
+
+expectError(() => {
+    const erring: KeysStrict = {
+        TestInterface1: ["left", "right"]
+    };
+    erring.TestInterface1 = "badType";
 });
+
+// https://github.com/SamVerschueren/tsd/issues/143
+// expectError(() => {
+//     const erring: KeysStrictReadonly = {
+//         TestInterface1: ["left", "right"]
+//     };
+//     erring.TestInterface1 = ["badAttemptOverwrite"];
+// });
