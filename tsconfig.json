@@ -11,7 +11,7 @@
     "declarationMap": true,
     "emitDeclarationOnly": true,
     "strict": true,
-    "target": "es5",
+    "target": "es6",
     "outDir": "dist"
   },
   "include": ["lib/**/*.js"],
