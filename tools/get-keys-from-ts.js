@@ -163,9 +163,23 @@ function isPropertyExcluded(property, excludedProperties) {
  * @returns {KeysStrict} The keys
  */
 function alphabetizeKeyInterfaces(initialNodes) {
-    const sortedNodeEntries = Object.entries(initialNodes).sort(
-        ([typeA], [typeB]) => (typeA < typeB ? -1 : 1)
-    );
+
+    /**
+     * Alphabetize
+     * @param {string} typeA The first type to compare
+     * @param {string} typeB The second type to compare
+     * @returns {1|-1} The sorting index
+     */
+    function alphabetize([typeA], [typeB]) {
+        return typeA < typeB ? -1 : 1;
+    }
+    const sortedNodeEntries = Object.entries(initialNodes).sort(alphabetize);
+
+    for (const [, keys] of sortedNodeEntries) {
+        keys.sort(alphabetize);
+    }
+
+    console.log('sortedNodeEntries', sortedNodeEntries);
 
     return Object.fromEntries(sortedNodeEntries);
 }
