@@ -1,6 +1,6 @@
 import { expectType, expectAssignable, expectError } from 'tsd';
 
-import { KEYS, getKeys, unionWith, VisitorKeysWritable, VisitorKeys } from "../lib/index.js";
+import { KEYS, getKeys, unionWith, VisitorKeysWritable, VisitorKeys } from "../";
 
 const assignmentExpression = {
     type: "AssignmentExpression",
