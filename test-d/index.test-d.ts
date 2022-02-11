@@ -1,6 +1,8 @@
 import { expectType, expectAssignable, expectError } from 'tsd';
 
-import { KEYS, getKeys, unionWith, VisitorKeysWritable, VisitorKeys } from "../";
+import { KEYS, getKeys, unionWith, VisitorKeys } from "../";
+
+type VisitorKeysWritable = { [type: string]: ReadonlyArray<string> };
 
 const assignmentExpression = {
     type: "AssignmentExpression",
