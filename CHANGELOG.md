@@ -1,3 +1,7 @@
+v3.3.0 - February 11, 2022
+
+* [`7f10327`](https://github.com/eslint/eslint-visitor-keys/commit/7f103276844fb131cfad115ee78eb19f798d5fc8) feat: Bundle JSDoc-built TypeScript declaration file (#34) (Brett Zamir)
+
 v3.2.0 - January 15, 2022
 
 * [`5c53218`](https://github.com/eslint/eslint-visitor-keys/commit/5c532184e05440d3c883b3d7864f84eb1b11dc90) feat: add missing JSXOpeningFragment and JSXClosingFragment (#33) (Richard Huang)
