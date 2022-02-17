@@ -15,7 +15,7 @@ import { promises } from "fs";
 import { parseForESLint } from "@typescript-eslint/parser";
 import esquery from "esquery";
 
-import { getKeys } from "../lib/index.js";
+import { getKeys, KEYS } from "../lib/index.js";
 
 const { readFile } = promises;
 
@@ -188,28 +188,7 @@ function alphabetizeKeyInterfaces(initialNodes) {
      * @returns {(string, string) => -1|1} The sorter
      */
     function getKeySorter(type) {
-        const sequence = [
-
-            // The groups should generally be suggestive of order but may need
-            //   to rearrange groups if occurring together
-            "id", "init",
-            "name", "attributes",
-            "key", "value",
-            ...(
-                type === "CallExpression" || type === "NewExpression"
-                    ? ["callee", "arguments"]
-                    : ["arguments", "callee"]
-            ),
-            "params", "param", "superClass", "left", "right",
-            ...(type === "DoWhileStatement"
-                ? [
-                    "body", "test"
-                ] : [
-                    "test", "consequent", "alternate",
-                    "update",
-                    "body"
-                ]
-            )];
+        const sequence = KEYS[type];
 
         /**
          * Alphabetize
@@ -218,7 +197,24 @@ function alphabetizeKeyInterfaces(initialNodes) {
          * @returns {1|-1} The sorting index
          */
         return function sortKeys(typeA, typeB) {
-            return sequence.indexOf(typeA) < sequence.indexOf(typeB) ? -1 : 1;
+            if (!sequence) {
+                return typeA < typeB ? -1 : 1;
+            }
+
+            const idxA = sequence.indexOf(typeA);
+            const idxB = sequence.indexOf(typeB);
+
+            if (idxA === -1 && idxB === -1) {
+                return typeA < typeB ? -1 : 1;
+            }
+            if (idxA === -1) {
+                return 1;
+            }
+            if (idxB === -1) {
+                return -1;
+            }
+
+            return idxA < idxB ? -1 : 1;
         };
     }
 

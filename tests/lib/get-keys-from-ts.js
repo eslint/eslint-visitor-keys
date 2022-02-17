@@ -29,4 +29,38 @@ describe("getKeysFromTsFile", () => {
 
         expect(actual).to.deep.equal(expected);
     });
+
+    it("sorts keys alphabetically if new", async () => {
+        const { keys: actual } = await getKeysFromTsFile(
+            "./tests/lib/fixtures/new-keys.d.ts"
+        );
+
+        const expected = {
+            NewFangledExpression: [
+                "down",
+                "left",
+                "right",
+                "up"
+            ]
+        };
+
+        expect(actual).to.deep.equal(expected);
+    });
+
+    it("sorts extra keys at end alphabetically", async () => {
+        const { keys: actual } = await getKeysFromTsFile(
+            "./tests/lib/fixtures/new-keys-on-old.d.ts"
+        );
+
+        const expected = {
+            AssignmentExpression: [
+                "left",
+                "right",
+                "down",
+                "up"
+            ]
+        };
+
+        expect(actual).to.deep.equal(expected);
+    });
 });
