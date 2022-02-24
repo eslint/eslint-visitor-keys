@@ -21,7 +21,16 @@ const { promises: { writeFile } } = fs;
         }
     );
 
-    const mergedKeys = alphabetizeKeyInterfaces({ ...keys, ...jsxKeys });
+    const backwardCompatibleKeys = {
+        ExperimentalRestProperty: [
+            "argument"
+        ],
+        ExperimentalSpreadProperty: [
+            "argument"
+        ]
+    };
+
+    const mergedKeys = alphabetizeKeyInterfaces({ ...keys, ...jsxKeys, ...backwardCompatibleKeys });
 
     // eslint-disable-next-line no-console -- CLI
     console.log("keys", mergedKeys);

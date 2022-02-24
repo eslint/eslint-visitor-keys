@@ -20,7 +20,16 @@ describe("getKeysFromTsFile", () => {
             }
         );
 
-        const actual = alphabetizeKeyInterfaces({ ...keys, ...jsxKeys });
+        const backwardCompatibleKeys = {
+            ExperimentalRestProperty: [
+                "argument"
+            ],
+            ExperimentalSpreadProperty: [
+                "argument"
+            ]
+        };
+
+        const actual = alphabetizeKeyInterfaces({ ...keys, ...jsxKeys, ...backwardCompatibleKeys });
 
         const expected = KEYS;
 
