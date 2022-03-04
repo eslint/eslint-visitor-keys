@@ -9,6 +9,7 @@
 
 import fs from "fs";
 import { alphabetizeKeyInterfaces, getKeysFromTsFile } from "./get-keys-from-ts.js";
+import backwardCompatibleKeys from "./backwardCompatibleKeys.js";
 
 const { promises: { writeFile } } = fs;
 
@@ -20,15 +21,6 @@ const { promises: { writeFile } } = fs;
             supplementaryDeclarations: tsInterfaceDeclarations
         }
     );
-
-    const backwardCompatibleKeys = {
-        ExperimentalRestProperty: [
-            "argument"
-        ],
-        ExperimentalSpreadProperty: [
-            "argument"
-        ]
-    };
 
     const mergedKeys = alphabetizeKeyInterfaces({ ...keys, ...jsxKeys, ...backwardCompatibleKeys });
 

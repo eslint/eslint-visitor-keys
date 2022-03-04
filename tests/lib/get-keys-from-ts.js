@@ -7,6 +7,7 @@ import { diffString } from "json-diff";
 import { expect } from "chai";
 import { alphabetizeKeyInterfaces, getKeysFromTsFile } from "../../tools/get-keys-from-ts.js";
 import { KEYS } from "../../lib/index.js";
+import backwardCompatibleKeys from "../../tools/backwardCompatibleKeys.js";
 
 describe("getKeysFromTsFile", () => {
     it("gets keys", async () => {
@@ -19,15 +20,6 @@ describe("getKeysFromTsFile", () => {
                 supplementaryDeclarations: tsInterfaceDeclarations
             }
         );
-
-        const backwardCompatibleKeys = {
-            ExperimentalRestProperty: [
-                "argument"
-            ],
-            ExperimentalSpreadProperty: [
-                "argument"
-            ]
-        };
 
         const actual = alphabetizeKeyInterfaces({ ...keys, ...jsxKeys, ...backwardCompatibleKeys });
 
