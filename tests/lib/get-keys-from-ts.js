@@ -7,7 +7,7 @@ import { diffString } from "json-diff";
 import { expect } from "chai";
 import { alphabetizeKeyInterfaces, getKeysFromTsFile } from "../../tools/get-keys-from-ts.js";
 import { KEYS } from "../../lib/index.js";
-import backwardCompatibleKeys from "../../tools/backwardCompatibleKeys.js";
+import backwardCompatibleKeys from "../../tools/backward-compatible-keys.js";
 
 describe("getKeysFromTsFile", () => {
     it("gets keys", async () => {

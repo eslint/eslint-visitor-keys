@@ -9,7 +9,7 @@
 
 import fs from "fs";
 import { alphabetizeKeyInterfaces, getKeysFromTsFile } from "./get-keys-from-ts.js";
-import backwardCompatibleKeys from "./backwardCompatibleKeys.js";
+import backwardCompatibleKeys from "./backward-compatible-keys.js";
 
 const { promises: { writeFile } } = fs;
 
