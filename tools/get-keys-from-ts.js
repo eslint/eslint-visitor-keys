@@ -364,9 +364,14 @@ async function getKeysFromTs(code, {
     for (const tsDeclarationNode of exportedTsInterfaceDeclarations) {
         const interfaceName = tsDeclarationNode.id.name;
 
-        const typeName = tsDeclarationNode.body.body.find(
+        const bodyType = tsDeclarationNode.body.body.find(
             prop => prop.key.name === "type"
-        )?.typeAnnotation?.typeAnnotation?.literal?.value;
+        );
+
+        const typeName = bodyType && bodyType.typeAnnotation &&
+            bodyType.typeAnnotation.typeAnnotation &&
+            bodyType.typeAnnotation.typeAnnotation.literal &&
+            bodyType.typeAnnotation.typeAnnotation.literal.value;
 
         if (!typeName) {
             continue;
