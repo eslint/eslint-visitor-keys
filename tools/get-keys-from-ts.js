@@ -23,13 +23,6 @@ const { readFile } = promises;
 // Helpers
 //------------------------------------------------------------------------------
 
-const propertiesToIgnore = new Set([
-    "loc",
-    "comments",
-    "innerComments",
-    "operator"
-]);
-
 const exemptedTypes = new Set([
     "TSBooleanKeyword",
     "TSNumberKeyword",
@@ -43,7 +36,7 @@ const exemptedTypes = new Set([
     "TSTypeReference"
 ]);
 
-// All items ending in `Statement` are also traversable
+// All items ending in `Statement` or `Operator` are also traversable
 const traversableTypes = new Set([
     "Array",
     "CatchClause",
@@ -82,8 +75,8 @@ const notTraversableTypes = new Set([
  * @param {string} name The name to check
  * @returns {boolean} Whether it is traversable.
  */
-function isTraversable(name) {
-    return name && (name.endsWith("Statement") || traversableTypes.has(name));
+function isKnownTraversable(name) {
+    return name && (name.endsWith("Operator") || name.endsWith("Statement") || traversableTypes.has(name));
 }
 
 /**
@@ -106,7 +99,7 @@ function checkTraversability(annotationType) {
         return false;
     }
 
-    if (!isTraversable(annotationType.typeName.name)) {
+    if (!isKnownTraversable(annotationType.typeName.name)) {
 
         // Todo?
         /*
@@ -120,7 +113,7 @@ function checkTraversability(annotationType) {
             // We might iterate types here to see if children are iterable and
             //   fail if not
 
-            unrecognizedTSTypeReferences.add(`${tsAnnotation.typeName.name}`);
+            unrecognizedTSTypeReferences.add(tsAnnotation.typeName.name);
             break;
         }
 
@@ -156,8 +149,7 @@ function findOmitTypes(excludedItem) {
  * @returns {boolean} Whether or not to be excluded
  */
 function isPropertyExcluded(property, excludedProperties) {
-    return propertiesToIgnore.has(property) ||
-        (excludedProperties && excludedProperties.includes(property));
+    return excludedProperties && excludedProperties.includes(property);
 }
 
 //------------------------------------------------------------------------------
@@ -351,7 +343,7 @@ async function getKeysFromTs(code, {
                 const innerTsDeclarationNode = findTsInterfaceDeclaration(paramInterfaceName);
 
                 if (!innerTsDeclarationNode) {
-                    unrecognizedTSTypeReferences.add(`${paramInterfaceName}`);
+                    unrecognizedTSTypeReferences.add(paramInterfaceName);
                     return;
                 }
 
@@ -360,7 +352,7 @@ async function getKeysFromTs(code, {
                 const innerTsDeclarationNode = findTsInterfaceDeclaration(innerInterfaceName);
 
                 if (!innerTsDeclarationNode) {
-                    unrecognizedTSTypeReferences.add(`${innerInterfaceName}`);
+                    unrecognizedTSTypeReferences.add(innerInterfaceName);
                     return;
                 }
 
