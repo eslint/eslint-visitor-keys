@@ -24,6 +24,9 @@ const { readFile } = promises;
 //------------------------------------------------------------------------------
 
 const exemptedTypes = new Set([
+    "TSUndefinedKeyword",
+    "TSNullKeyword",
+    "TSUnknownKeyword",
     "TSBooleanKeyword",
     "TSNumberKeyword",
     "TSStringKeyword",
@@ -135,9 +138,6 @@ function checkTraversability(annotationType) {
 function findOmitTypes(excludedItem) {
     if (excludedItem.type === "TSUnionType") {
         return excludedItem.types.map(typeNode => findOmitTypes(typeNode));
-    }
-    if (excludedItem.type !== "TSLiteralType") {
-        throw new Error("Processing of non-literals in `Omit` not currently supported");
     }
     return excludedItem.literal.value;
 }
@@ -333,7 +333,7 @@ async function getKeysFromTs(code, {
 
             if (typeParameters) {
                 if (innerInterfaceName !== "Omit") {
-                    throw new Error("Unknown extension type with parameters");
+                    throw new Error("Unknown type parameter");
                 }
 
                 const [param, ...excludedAST] = typeParameters.params;

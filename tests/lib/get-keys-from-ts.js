@@ -31,6 +31,22 @@ describe("getKeysFromTsFile", () => {
         expect(actual).to.deep.equal(expected);
     });
 
+    it("gets keys minus explicitly omitted ones", async () => {
+        const { keys: actual } = await getKeysFromTsFile(
+            "./tests/lib/fixtures/union-omit.d.ts"
+        );
+
+        const expected = {
+            AnotherStatement: [
+                "anotherToIgnore"
+            ],
+            IgnoredStatement: [],
+            StaticBlock: []
+        };
+
+        expect(actual).to.deep.equal(expected);
+    });
+
     it("sorts keys alphabetically if new", async () => {
         const { keys: actual } = await getKeysFromTsFile(
             "./tests/lib/fixtures/new-keys.d.ts"
@@ -63,5 +79,109 @@ describe("getKeysFromTsFile", () => {
         };
 
         expect(actual).to.deep.equal(expected);
+    });
+
+    it("sorts extra keys at end alphabetically (other order)", async () => {
+        const { keys: actual } = await getKeysFromTsFile(
+            "./tests/lib/fixtures/new-keys-on-old-other-order.d.ts"
+        );
+
+        const expected = {
+            AssignmentExpression: [
+                "left",
+                "right",
+                "down",
+                "up"
+            ]
+        };
+
+        expect(actual).to.deep.equal(expected);
+    });
+
+    it("sorts extra keys at end alphabetically (switched order)", async () => {
+        const { keys: actual } = await getKeysFromTsFile(
+            "./tests/lib/fixtures/new-keys-on-old-order-switched.d.ts"
+        );
+
+        const expected = {
+            AssignmentExpression: [
+                "left",
+                "right",
+                "down",
+                "up"
+            ]
+        };
+
+        expect(actual).to.deep.equal(expected);
+    });
+
+    it("throws with unhandled TS type reference", async () => {
+        let error;
+
+        try {
+            await getKeysFromTsFile(
+                "./tests/lib/fixtures/bad-type-reference.d.ts"
+            );
+        } catch (err) {
+            error = err;
+        }
+
+        expect(error.message).to.contain("Unhandled TypeScript type reference");
+    });
+
+    it("throws with unhandled extends TS type reference", async () => {
+        let error;
+
+        try {
+            await getKeysFromTsFile(
+                "./tests/lib/fixtures/bad-extends-type-reference.d.ts"
+            );
+        } catch (err) {
+            error = err;
+        }
+
+        expect(error.message).to.contain("Unhandled TypeScript type reference");
+    });
+
+    it("throws with unhandled TS type", async () => {
+        let error;
+
+        try {
+            await getKeysFromTsFile(
+                "./tests/lib/fixtures/bad-type.d.ts"
+            );
+        } catch (err) {
+            error = err;
+        }
+
+        expect(error.message).to.contain("Unhandled TypeScript type;");
+    });
+
+    it("throws with unhandled TS typeParameters", async () => {
+        let error;
+
+        try {
+            await getKeysFromTsFile(
+                "./tests/lib/fixtures/bad-type-parameters.d.ts"
+            );
+        } catch (err) {
+            error = err;
+        }
+
+        expect(error.message).to.contain("Unknown type parameter");
+    });
+
+    it("throws with bad key", async () => {
+        let error;
+
+        try {
+            await getKeysFromTsFile(
+                "./tests/lib/fixtures/new-keys-bad.d.ts"
+            );
+        } catch (err) {
+            error = err;
+        }
+
+        expect(error.message).to.equal("Type unknown as to traversability: BadExpression");
     });
 });
