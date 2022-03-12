@@ -23,7 +23,7 @@ const { readFile } = promises;
 // Helpers
 //------------------------------------------------------------------------------
 
-const exemptedTypes = new Set([
+const knownTypes = new Set([
     "TSUndefinedKeyword",
     "TSNullKeyword",
     "TSUnknownKeyword",
@@ -39,31 +39,11 @@ const exemptedTypes = new Set([
     "TSTypeReference"
 ]);
 
-// All items ending in `Statement` or `Operator` are also traversable
-const traversableTypes = new Set([
-    "Array",
-    "CatchClause",
-    "ChainElement",
-    "ClassBody",
-    "Declaration",
-    "Expression",
-    "FunctionExpression",
-    "Identifier",
-    "JSXClosingFragment",
-    "JSXIdentifier",
-    "JSXMemberExpression",
-    "JSXOpeningElement",
-    "JSXOpeningFragment",
-    "JSXClosingElement",
-    "Literal",
-    "Pattern",
-    "SourceLocation",
-    "TemplateLiteral",
-    "VariableDeclaration"
+const notTraversableTypes = new Set([
+    "RegExp"
 ]);
 
-const notTraversableTypes = new Set([
-    "RegExp",
+const notTraversableTSTypes = new Set([
     "TSUndefinedKeyword",
     "TSNullKeyword",
     "TSBooleanKeyword",
@@ -73,62 +53,10 @@ const notTraversableTypes = new Set([
     "TSLiteralType"
 ]);
 
-/**
- * Checks if a name is traverseable
- * @param {string} name The name to check
- * @returns {boolean} Whether it is traversable.
- */
-function isKnownTraversable(name) {
-    return name && (name.endsWith("Operator") || name.endsWith("Statement") || traversableTypes.has(name));
-}
-
-/**
- * Determine whether the Node is traversable
- * @param {Node} annotationType The annotation type Node
- * @returns {boolean} Whether the node is traversable
- */
-function checkTraversability(annotationType) {
-    if (
-        notTraversableTypes.has(annotationType.type)
-    ) {
-        return false;
-    }
-
-    if (annotationType.type === "TSTupleType") {
-        return annotationType.elementTypes.some(annType => checkTraversability(annType));
-    }
-
-    if (notTraversableTypes.has(annotationType.typeName.name)) {
-        return false;
-    }
-
-    if (!isKnownTraversable(annotationType.typeName.name)) {
-
-        // Todo?
-        /*
-        const innerInterfaceName = tsAnnotation.typeName.name;
-        const innerTsDeclarationNode = findTsInterfaceDeclaration(innerInterfaceName);
-
-        if (!innerTsDeclarationNode) {
-
-            const innerTsTypeNode = findTsTypeDeclaration(innerInterfaceName);
-
-            // We might iterate types here to see if children are iterable and
-            //   fail if not
-
-            unrecognizedTSTypeReferences.add(tsAnnotation.typeName.name);
-            break;
-        }
-
-        // We might iterate interfaces here to see if children are iterable
-        //   (see `addNodeForInterface` for a pattern of iteration)
-        */
-
-        throw new Error(`Type unknown as to traversability: ${annotationType.typeName.name}`);
-    }
-
-    return true;
-}
+const commentTypes = new Set([
+    "Line",
+    "Block"
+]);
 
 /**
  * Get the literal names out of AST
@@ -218,6 +146,65 @@ function alphabetizeKeyInterfaces(initialNodes) {
 }
 
 /**
+ * Traverse interface `extends`
+ * @param {Node} declNode The TS declaration node
+ * @param {Function} handler The callback
+ * @returns {any[]} Return value of handler
+ */
+function traverseExtends(declNode, handler) {
+    const ret = [];
+
+    for (const extension of declNode.extends || []) {
+        const { typeParameters, expression } = extension;
+        const innerInterfaceName = expression.name;
+
+        let res;
+
+        if (typeParameters) {
+            if (innerInterfaceName !== "Omit") {
+                throw new Error("Unknown type parameter");
+            }
+
+            const [param, ...excludedAST] = typeParameters.params;
+            const paramInterfaceName = param.typeName.name;
+            const excluded = excludedAST.flatMap(findOmitTypes);
+
+            res = handler({ iName: paramInterfaceName, excluded });
+        } else {
+            res = handler({ iName: innerInterfaceName });
+        }
+
+        ret.push(res);
+    }
+
+    return ret;
+}
+
+/**
+ * Traverse the properties of a declaration node.
+ * @param {Node} tsDeclarationNode The declaration node
+ * @param {(string) => void} handler Passed the property
+ * @returns {any[]} The return values of the callback
+ */
+function traverseProperties(tsDeclarationNode, handler) {
+    const tsPropertySignatures = tsDeclarationNode.body.body;
+
+    const ret = [];
+
+    for (const tsPropertySignature of tsPropertySignatures) {
+        const property = tsPropertySignature.key.name;
+
+        const tsAnnotation = tsPropertySignature.typeAnnotation.typeAnnotation;
+
+        const res = handler({ property, tsAnnotation });
+
+        ret.push(res);
+    }
+
+    return ret;
+}
+
+/**
  * Builds visitor keys based on TypeScript declaration.
  * @param {string} code TypeScript declaration file as code to parse.
  * @param {{supplementaryDeclarations: Node[]}} [options] The options
@@ -228,7 +215,8 @@ async function getKeysFromTs(code, {
     // Todo: Ideally we'd just get these from the import
     supplementaryDeclarations = {
         allTsInterfaceDeclarations: [],
-        exportedTsInterfaceDeclarations: []
+        exportedTsInterfaceDeclarations: [],
+        tsTypeDeclarations: []
     }
 } = {}) {
     const unrecognizedTSTypeReferences = new Set();
@@ -258,16 +246,17 @@ async function getKeysFromTs(code, {
         }
     ), ...supplementaryDeclarations.exportedTsInterfaceDeclarations];
 
-    // const tsTypeDeclarations = esquery.query(
-    //     parsedTSDeclaration.ast,
-    //     "TSTypeAliasDeclaration",
-    //     {
-    //
-    //         // TypeScript keys here to find our *.d.ts nodes (not for the ESTree
-    //         //   ones we want)
-    //         visitorKeys: parsedTSDeclaration.visitorKeys
-    //     }
-    // );
+    const tsTypeDeclarations = [...esquery.query(
+        parsedTSDeclaration.ast,
+        "TSTypeAliasDeclaration",
+        {
+
+            // TypeScript keys here to find our *.d.ts nodes (not for the ESTree
+            //   ones we want)
+            visitorKeys: parsedTSDeclaration.visitorKeys
+        }
+    ), ...supplementaryDeclarations.tsTypeDeclarations];
+
     const initialNodes = {};
 
     /**
@@ -282,88 +271,200 @@ async function getKeysFromTs(code, {
     }
 
     /**
-     * Adds a node for a given interface.
-     * @param {string} interfaceName Name of the interface
+     * Finds a TypeScript type declaration.
+     * @param {string} typeName A type name
+     * @returns {Node} The type declaration node
+     */
+    function findTsTypeDeclaration(typeName) {
+        return tsTypeDeclarations.find(typeDecl => typeDecl.id.name === typeName);
+    }
+
+    /**
+     * Whether has a valid (non-comment) type
+     * @param {object} cfg Config object
+     * @param {string} cfg.property The property name
+     * @param {Node} cfg.tsAnnotation The annotation node
+     * @returns {boolean} Whether has a traverseable type
+     */
+    function hasValidType({ property, tsAnnotation }) {
+        const tsPropertyType = tsAnnotation.type;
+
+        if (property !== "type") {
+            return false;
+        }
+
+        switch (tsPropertyType) {
+            case "TSLiteralType":
+                return typeof tsAnnotation.literal.value === "string" &&
+                    !commentTypes.has(tsAnnotation.literal.value);
+            case "TSStringKeyword":
+
+                // Ok, but not sufficient
+                return false;
+            case "TSUnionType":
+                // eslint-disable-next-line no-use-before-define -- Circular
+                return tsAnnotation.types.some(annType => hasValidType({
+                    property: "type",
+                    tsAnnotation: annType
+                }));
+            default:
+                throw new Error(`Unexpected \`type\` value property type ${tsPropertyType}`);
+        }
+    }
+
+    /**
+     * Whether the interface has a valid type ancestor
+     * @param {string} interfaceName The interface to check
+     * @returns {void}
+     */
+    function hasValidTypeAncestor(interfaceName) {
+        let decl = findTsInterfaceDeclaration(interfaceName);
+
+        if (decl) {
+            if (traverseProperties(decl, hasValidType).some(hasValid => hasValid)) {
+                return true;
+            }
+        }
+
+        if (!decl) {
+            decl = findTsTypeDeclaration(interfaceName);
+            if (decl) {
+                if (!decl.typeAnnotation.types) {
+                    return notTraversableTSTypes.has(decl.typeAnnotation.type)
+                        ? false
+                        : hasValidTypeAncestor(decl.typeAnnotation.typeName.name);
+                }
+
+                return decl.typeAnnotation.types.some(type => {
+                    if (!type.typeName) {
+
+                        // Literal
+                        return false;
+                    }
+
+                    return hasValidTypeAncestor(type.typeName.name);
+                });
+            }
+        }
+
+        if (!decl) {
+            throw new Error(`Type unknown as to traversability: ${interfaceName}`);
+        }
+
+        if (traverseExtends(decl, ({ iName, excluded }) => {
+
+            // We don't want to look at this ancestor's `type` if being excluded
+            if (excluded && excluded.includes("type")) {
+                return false;
+            }
+
+            return hasValidTypeAncestor(iName);
+        }).some(hasValid => hasValid)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Determine whether the Node is traversable
+     * @param {Node} annotationType The annotation type Node
+     * @param {string} property The property name
+     * @returns {boolean} Whether the node is traversable
+     */
+    function checkTraversability(annotationType, property) {
+        if (
+            notTraversableTSTypes.has(annotationType.type)
+        ) {
+            return false;
+        }
+
+        if (annotationType.type === "TSTupleType") {
+            return annotationType.elementTypes.some(annType => checkTraversability(annType, property));
+        }
+
+        if (annotationType.type === "TSUnionType") {
+            return annotationType.types.some(annType => checkTraversability(annType, property));
+        }
+
+        if (annotationType.typeName.name === "Array") {
+            return annotationType.typeParameters.params.some(annType => checkTraversability(annType, property));
+        }
+
+        if (
+            notTraversableTypes.has(annotationType.typeName.name)
+        ) {
+            return false;
+        }
+
+        if (hasValidTypeAncestor(annotationType.typeName.name)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Adds a property to a node based on a type declaration node's contents.
      * @param {Node} tsDeclarationNode TypeScript declaration node
      * @param {Node} node The Node on which to build
      * @param {string[]} excludedProperties Excluded properties
      * @returns {void}
      */
-    function addNodeForInterface(interfaceName, tsDeclarationNode, node, excludedProperties) {
-        const tsPropertySignatures = tsDeclarationNode.body.body;
+    function addPropertyToNodeForDeclaration(tsDeclarationNode, node, excludedProperties) {
 
-        for (const tsPropertySignature of tsPropertySignatures) {
-            const property = tsPropertySignature.key.name;
-
+        traverseProperties(tsDeclarationNode, ({ property, tsAnnotation }) => {
             if (isPropertyExcluded(property, excludedProperties)) {
-                continue;
+                return;
             }
 
-            const tsAnnotation = tsPropertySignature.typeAnnotation.typeAnnotation;
             const tsPropertyType = tsAnnotation.type;
 
+            if (property === "type" && tsPropertyType === "TSLiteralType") {
+
+                // console.log('tsAnnotation', tsAnnotation);
+                // node[property] = tsAnnotation.literal.value;
+                // return;
+            }
+
             // For sanity-checking
-            if (!exemptedTypes.has(tsPropertyType)) {
+            if (!knownTypes.has(tsPropertyType)) {
                 unrecognizedTSTypes.add(tsPropertyType);
-                continue;
+                return;
             }
 
             switch (tsPropertyType) {
                 case "TSUnionType":
-                    if (tsAnnotation.types.some(checkTraversability)) {
+                    if (tsAnnotation.types.some(annType => checkTraversability(annType, property))) {
                         break;
                     }
-                    continue;
+                    return;
                 case "TSTypeReference": {
-                    if (checkTraversability(tsAnnotation)) {
+                    if (checkTraversability(tsAnnotation, property)) {
                         break;
                     }
 
-                    continue;
+                    return;
                 } default:
-                    continue;
+                    return;
             }
 
             node[property] = null;
-        }
+        });
 
-        for (const extension of tsDeclarationNode.extends || []) {
-            const { typeParameters, expression } = extension;
-            const innerInterfaceName = expression.name;
+        traverseExtends(tsDeclarationNode, ({ iName, excluded }) => {
+            const innerTsDeclarationNode = findTsInterfaceDeclaration(iName);
 
-            if (typeParameters) {
-                if (innerInterfaceName !== "Omit") {
-                    throw new Error("Unknown type parameter");
-                }
-
-                const [param, ...excludedAST] = typeParameters.params;
-                const paramInterfaceName = param.typeName.name;
-                const excluded = excludedAST.flatMap(findOmitTypes);
-
-                const innerTsDeclarationNode = findTsInterfaceDeclaration(paramInterfaceName);
-
-                if (!innerTsDeclarationNode) {
-                    unrecognizedTSTypeReferences.add(paramInterfaceName);
-                    return;
-                }
-
-                addNodeForInterface(paramInterfaceName, innerTsDeclarationNode, node, excluded);
-            } else {
-                const innerTsDeclarationNode = findTsInterfaceDeclaration(innerInterfaceName);
-
-                if (!innerTsDeclarationNode) {
-                    unrecognizedTSTypeReferences.add(innerInterfaceName);
-                    return;
-                }
-
-                addNodeForInterface(innerInterfaceName, innerTsDeclarationNode, node);
+            if (!innerTsDeclarationNode) {
+                unrecognizedTSTypeReferences.add(iName);
+                return;
             }
-        }
+
+            addPropertyToNodeForDeclaration(innerTsDeclarationNode, node, excluded);
+        });
     }
 
     for (const tsDeclarationNode of exportedTsInterfaceDeclarations) {
-        const interfaceName = tsDeclarationNode.id.name;
-
         const bodyType = tsDeclarationNode.body.body.find(
             prop => prop.key.name === "type"
         );
@@ -379,7 +480,7 @@ async function getKeysFromTs(code, {
 
         const node = {};
 
-        addNodeForInterface(interfaceName, tsDeclarationNode, node);
+        addPropertyToNodeForDeclaration(tsDeclarationNode, node);
 
         initialNodes[typeName] = [...new Set(getKeys(node), ...(initialNodes[typeName] || []))];
     }
@@ -407,7 +508,8 @@ async function getKeysFromTs(code, {
         keys: nodes,
         tsInterfaceDeclarations: {
             allTsInterfaceDeclarations,
-            exportedTsInterfaceDeclarations
+            exportedTsInterfaceDeclarations,
+            tsTypeDeclarations
         }
     };
 }
@@ -428,7 +530,7 @@ async function getKeysFromTs(code, {
 /**
  * Builds visitor keys based on TypeScript declaration.
  * @param {string} file TypeScript declaration file to parse.
- * @param {{supplementaryDeclarations: Node[]}} options The options
+ * @param {{supplementaryDeclarations: Object<string, Node[]>}} options The options
  * @returns {Promise<VisitorKeysExport>} The built visitor keys
  */
 async function getKeysFromTsFile(file, options) {

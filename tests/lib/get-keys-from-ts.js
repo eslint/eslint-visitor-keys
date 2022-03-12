@@ -184,4 +184,18 @@ describe("getKeysFromTsFile", () => {
 
         expect(error.message).to.equal("Type unknown as to traversability: BadExpression");
     });
+
+    it("throws with bad type value", async () => {
+        let error;
+
+        try {
+            await getKeysFromTsFile(
+                "./tests/lib/fixtures/bad-type-value.d.ts"
+            );
+        } catch (err) {
+            error = err;
+        }
+
+        expect(error.message).to.equal("Unexpected `type` value property type TSUndefinedKeyword");
+    });
 });
