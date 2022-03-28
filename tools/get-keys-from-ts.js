@@ -208,9 +208,9 @@ function traverseProperties(tsDeclarationNode, handler) {
  * Builds visitor keys based on TypeScript declaration.
  * @param {string} code TypeScript declaration file as code to parse.
  * @param {{supplementaryDeclarations: Node[]}} [options] The options
- * @returns {Promise<VisitorKeysExport>} The built visitor keys
+ * @returns {VisitorKeysExport} The built visitor keys
  */
-async function getKeysFromTs(code, {
+function getKeysFromTs(code, {
 
     // Todo: Ideally we'd just get these from the import
     supplementaryDeclarations = {
