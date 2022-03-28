@@ -536,7 +536,7 @@ function getKeysFromTs(code, {
 async function getKeysFromTsFile(file, options) {
     const code = await readFile(file);
 
-    return await getKeysFromTs(code, options);
+    return getKeysFromTs(code, options);
 }
 
 //------------------------------------------------------------------------------
