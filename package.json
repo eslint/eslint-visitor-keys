@@ -59,6 +59,7 @@
     "publish-release": "eslint-publish-release"
   },
   "repository": "eslint/eslint-visitor-keys",
+  "funding": "https://opencollective.com/eslint",
   "keywords": [],
   "author": "Toru Nagashima (https://github.com/mysticatea)",
   "license": "Apache-2.0",
