@@ -3,7 +3,6 @@ export default {
     treeshake: false,
     output: {
         format: "cjs",
-        file: "dist/eslint-visitor-keys.cjs",
-        sourcemap: true
+        file: "dist/eslint-visitor-keys.cjs"
     }
 };
