@@ -45,7 +45,9 @@
   },
   "scripts": {
     "prepare": "npm run build",
-    "build": "rollup -c && npm run tsc",
+    "bundle": "rollup -c",
+    "build": "npm run bundle && npm run tsc",
+    "build:debug": "npm run bundle -- -m && npm run tsc",
     "lint": "eslint .",
     "tsc": "tsc",
     "tsd": "tsd",
