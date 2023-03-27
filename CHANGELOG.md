@@ -1,3 +1,13 @@
+v3.4.0 - March 27, 2023
+
+* [`e9a070f`](https://github.com/eslint/eslint-visitor-keys/commit/e9a070fcbf53c14374e17801799016ce21d0c0ff) fix: remove useless sourcemap url (fixes #43) (#44) (余腾靖)
+* [`0398109`](https://github.com/eslint/eslint-visitor-keys/commit/0398109f1f751c58be3bd3206d22ae9c1b269219) chore: add triage action (#42) (Milos Djermanovic)
+* [`bcffbe5`](https://github.com/eslint/eslint-visitor-keys/commit/bcffbe52989bf726475c6b86eba3003275317f45) ci: add Node v19 (#41) (Milos Djermanovic)
+* [`c24f2e4`](https://github.com/eslint/eslint-visitor-keys/commit/c24f2e45cc59dbdeb8c2b48782d3599fbef9cbcb) chore: update github actions and add funding field (#40) (Deepshika S)
+* [`81c0732`](https://github.com/eslint/eslint-visitor-keys/commit/81c0732aa4086ad75f0adf4512823e4c8c584493) build: add node v18 (#39) (唯然)
+* [`6ece4bd`](https://github.com/eslint/eslint-visitor-keys/commit/6ece4bd4086965bdaf92d95b6a03d8d122468b4e) feat: add `JSXSpreadChild` and tool to build keys out of AST definitions (#36) (Brett Zamir)
+* [`4beb7a7`](https://github.com/eslint/eslint-visitor-keys/commit/4beb7a7be5fd7d25e5572c3dfee3e127edd8cadb) docs: update badges (#37) (Milos Djermanovic)
+
 v3.3.0 - February 11, 2022
 
 * [`7f10327`](https://github.com/eslint/eslint-visitor-keys/commit/7f103276844fb131cfad115ee78eb19f798d5fc8) feat: Bundle JSDoc-built TypeScript declaration file (#34) (Brett Zamir)
