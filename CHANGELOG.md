@@ -1,3 +1,18 @@
+# Changelog
+
+## [3.4.1](https://github.com/eslint/eslint-visitor-keys/compare/v3.4.0...v3.4.1) (2023-05-05)
+
+
+### Bug Fixes
+
+* correct types for node16 resolution ([#47](https://github.com/eslint/eslint-visitor-keys/issues/47)) ([7bd1fc1](https://github.com/eslint/eslint-visitor-keys/commit/7bd1fc1d483c2d0fdd5e0eddb2702f177372889c))
+
+
+### Chores
+
+* run tests on Node.js v20 ([#45](https://github.com/eslint/eslint-visitor-keys/issues/45)) ([c982093](https://github.com/eslint/eslint-visitor-keys/commit/c982093329f12c02dc87569930a6042f4095026b))
+* set up release-please ([#48](https://github.com/eslint/eslint-visitor-keys/issues/48)) ([a7fb4c7](https://github.com/eslint/eslint-visitor-keys/commit/a7fb4c7eb5d122e89bc6c24779ea06c487242c87))
+
 v3.4.0 - March 27, 2023
 
 * [`e9a070f`](https://github.com/eslint/eslint-visitor-keys/commit/e9a070fcbf53c14374e17801799016ce21d0c0ff) fix: remove useless sourcemap url (fixes #43) (#44) (余腾靖)
