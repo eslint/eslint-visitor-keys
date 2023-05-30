@@ -260,7 +260,7 @@ function getKeysFromTs(code, {
     const initialNodes = {};
 
     /**
-     * Finds a TypeScript interfaction declaration.
+     * Finds a TypeScript interface declaration.
      * @param {string} interfaceName The type name.
      * @returns {Node} The interface declaration node
      */
