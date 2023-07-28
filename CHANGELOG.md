@@ -1,5 +1,19 @@
 # Changelog
 
+## [3.4.2](https://github.com/eslint/eslint-visitor-keys/compare/v3.4.1...v3.4.2) (2023-07-27)
+
+
+### Documentation
+
+* fix spelling mistakes ([#50](https://github.com/eslint/eslint-visitor-keys/issues/50)) ([4ce1c17](https://github.com/eslint/eslint-visitor-keys/commit/4ce1c1777181b87f5dcd3f10a3d8aef0710f8d0e))
+* remove `release` script reference from README ([#52](https://github.com/eslint/eslint-visitor-keys/issues/52)) ([4640146](https://github.com/eslint/eslint-visitor-keys/commit/46401465ff5bb08bf793219d399c11434fd163be))
+
+
+### Chores
+
+* Add PRs to triage ([#54](https://github.com/eslint/eslint-visitor-keys/issues/54)) ([a7b64b4](https://github.com/eslint/eslint-visitor-keys/commit/a7b64b4ea0a4548f92cb41428d3e23b30f0cf8de))
+* generate provenance statements when release ([#53](https://github.com/eslint/eslint-visitor-keys/issues/53)) ([7b09698](https://github.com/eslint/eslint-visitor-keys/commit/7b09698fa51bbd9fcace50cb1014eec87abde140))
+
 ## [3.4.1](https://github.com/eslint/eslint-visitor-keys/compare/v3.4.0...v3.4.1) (2023-05-05)
 
 
