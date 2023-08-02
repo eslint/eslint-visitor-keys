@@ -46,11 +46,11 @@
     "typescript": "^4.6.2"
   },
   "scripts": {
-    "build": "npm run bundle && npm run tsc",
-    "build:debug": "npm run bundle -- -m && npm run tsc",
+    "build": "npm run build:cjs && npm run build:types",
+    "build:cjs": "rollup -c",
+    "build:debug": "npm run build:cjs -- -m && npm run build:types",
     "build:keys": "node tools/build-keys-from-ts",
-    "bundle": "rollup -c",
-    "coverage": "c8 report --reporter lcov && opener coverage/lcov-report/index.html",
+    "build:types": "tsc",
     "lint": "eslint .",
     "prepare": "npm run build",
     "release:generate:latest": "eslint-generate-release",
@@ -58,9 +58,9 @@
     "release:generate:beta": "eslint-generate-prerelease beta",
     "release:generate:rc": "eslint-generate-prerelease rc",
     "release:publish": "eslint-publish-release",
-    "test": "mocha tests/lib/**/*.cjs && c8 mocha tests/lib/**/*.js && npm run tsd",
-    "tsc": "tsc",
-    "tsd": "tsd"
+    "test": "mocha tests/lib/**/*.cjs && c8 mocha tests/lib/**/*.js && npm run test:types",
+    "test:open-coverage": "c8 report --reporter lcov && opener coverage/lcov-report/index.html",
+    "test:types": "tsd"
   },
   "repository": "eslint/eslint-visitor-keys",
   "funding": "https://opencollective.com/eslint",
