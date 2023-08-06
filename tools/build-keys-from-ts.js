@@ -31,7 +31,7 @@ const { promises: { writeFile } } = fs;
         "./lib/visitor-keys.js",
         // eslint-disable-next-line indent -- Readability
 `/**
- * @typedef {import('./index.js').VisitorKeys} VisitorKeys
+ * @typedef {{ readonly [type: string]: ReadonlyArray<string> }} VisitorKeys
  */
 
 /**
