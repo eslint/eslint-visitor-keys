@@ -1,5 +1,15 @@
 # Changelog
 
+## [3.4.3](https://github.com/eslint/eslint-visitor-keys/compare/v3.4.2...v3.4.3) (2023-08-08)
+
+
+### Chores
+
+* Add back add-to-triage ([#59](https://github.com/eslint/eslint-visitor-keys/issues/59)) ([5ea8b12](https://github.com/eslint/eslint-visitor-keys/commit/5ea8b120d73f1dd6db92427d025c6805df43397d))
+* Remove add-to-triage ([#56](https://github.com/eslint/eslint-visitor-keys/issues/56)) ([45d4c17](https://github.com/eslint/eslint-visitor-keys/commit/45d4c17b63d26ef486c92cfb60283991e36d6db0))
+* standardize npm script names ([#55](https://github.com/eslint/eslint-visitor-keys/issues/55)) ([0461695](https://github.com/eslint/eslint-visitor-keys/commit/0461695b730821c04c20d46f5cff9195509f865b))
+* update `typedef` in build keys template ([#58](https://github.com/eslint/eslint-visitor-keys/issues/58)) ([eb6c66d](https://github.com/eslint/eslint-visitor-keys/commit/eb6c66dbaf6389d253d10dd74d22915d7e33d651))
+
 ## [3.4.2](https://github.com/eslint/eslint-visitor-keys/compare/v3.4.1...v3.4.2) (2023-07-27)
 
 
