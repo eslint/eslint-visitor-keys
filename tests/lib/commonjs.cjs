@@ -3,7 +3,6 @@
  * @author Mike Reinstein
  */
 
-// eslint-disable-next-line strict
 "use strict";
 
 //------------------------------------------------------------------------------
@@ -49,7 +48,7 @@ describe("commonjs", () => {
 
         for (const type of Object.keys(additionalKeys)) {
             for (const key of additionalKeys[type]) {
-                assert(unionKeys[type].indexOf(key) !== -1, `'${key}' should be included in '${type}'.`);
+                assert(unionKeys[type].includes(key), `'${key}' should be included in '${type}'.`);
             }
         }
     });
