@@ -1,5 +1,21 @@
 # Changelog
 
+## [4.0.0](https://github.com/eslint/eslint-visitor-keys/compare/v3.4.3...v4.0.0) (2024-02-08)
+
+
+### ⚠ BREAKING CHANGES
+
+* Require Node.js `^18.18.0 || ^20.9.0 || >=21.1.0` ([#63](https://github.com/eslint/eslint-visitor-keys/issues/63))
+
+### Features
+
+* Require Node.js `^18.18.0 || ^20.9.0 || &gt;=21.1.0` ([#63](https://github.com/eslint/eslint-visitor-keys/issues/63)) ([388b2ac](https://github.com/eslint/eslint-visitor-keys/commit/388b2acedbe3881edd52b45f217db393731feb48))
+
+
+### Chores
+
+* run tests in Node.js 21 ([#61](https://github.com/eslint/eslint-visitor-keys/issues/61)) ([b23bfb7](https://github.com/eslint/eslint-visitor-keys/commit/b23bfb7f938d6559dfff8f02203c866a2fb26618))
+
 ## [3.4.3](https://github.com/eslint/eslint-visitor-keys/compare/v3.4.2...v3.4.3) (2023-08-08)
 
 
