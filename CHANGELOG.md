@@ -9,7 +9,7 @@
 
 ### Features
 
-* Require Node.js `^18.18.0 || ^20.9.0 || &gt;=21.1.0` ([#63](https://github.com/eslint/eslint-visitor-keys/issues/63)) ([388b2ac](https://github.com/eslint/eslint-visitor-keys/commit/388b2acedbe3881edd52b45f217db393731feb48))
+* Require Node.js `^18.18.0 || ^20.9.0 || >=21.1.0` ([#63](https://github.com/eslint/eslint-visitor-keys/issues/63)) ([388b2ac](https://github.com/eslint/eslint-visitor-keys/commit/388b2acedbe3881edd52b45f217db393731feb48))
 
 
 ### Chores
