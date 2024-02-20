@@ -1,5 +1,17 @@
 # Changelog
 
+## [4.0.1](https://github.com/eslint/eslint-visitor-keys/compare/v4.0.0...v4.0.1) (2024-02-20)
+
+
+### Documentation
+
+* fix changelog for v4.0.0 ([#64](https://github.com/eslint/eslint-visitor-keys/issues/64)) ([3f7c528](https://github.com/eslint/eslint-visitor-keys/commit/3f7c528b302a92fe43d12d2d8c100e3b39a7517a))
+
+
+### Chores
+
+* switch to eslint flat config ([#60](https://github.com/eslint/eslint-visitor-keys/issues/60)) ([f988b6e](https://github.com/eslint/eslint-visitor-keys/commit/f988b6e131c86386e3527b3a736550cb13b23f3e))
+
 ## [4.0.0](https://github.com/eslint/eslint-visitor-keys/compare/v3.4.3...v4.0.0) (2024-02-08)
 
 
