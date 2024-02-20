@@ -42,7 +42,7 @@ describe("eslint-visitor-keys", () => {
         it("should include all keys of lib/visitor-keys.js", () => {
             for (const type of Object.keys(keys)) {
                 for (const key of keys[type]) {
-                    assert(unionKeys[type].indexOf(key) !== -1, `'${key}' should be included in '${type}'.`);
+                    assert(unionKeys[type].includes(key), `'${key}' should be included in '${type}'.`);
                 }
             }
         });
@@ -50,7 +50,7 @@ describe("eslint-visitor-keys", () => {
         it("should include all additional keys", () => {
             for (const type of Object.keys(additionalKeys)) {
                 for (const key of additionalKeys[type]) {
-                    assert(unionKeys[type].indexOf(key) !== -1, `'${key}' should be included in '${type}'.`);
+                    assert(unionKeys[type].includes(key), `'${key}' should be included in '${type}'.`);
                 }
             }
         });

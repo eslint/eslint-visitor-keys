@@ -150,6 +150,7 @@ function alphabetizeKeyInterfaces(initialNodes) {
  * @param {Node} declNode The TS declaration node
  * @param {Function} handler The callback
  * @returns {any[]} Return value of handler
+ * @throws {Error} If it finds an unknown type parameter.
  */
 function traverseExtends(declNode, handler) {
     const ret = [];
@@ -209,6 +210,7 @@ function traverseProperties(tsDeclarationNode, handler) {
  * @param {string} code TypeScript declaration file as code to parse.
  * @param {{supplementaryDeclarations: Node[]}} [options] The options
  * @returns {VisitorKeysExport} The built visitor keys
+ * @throws {Error} If it finds an unknown type.
  */
 function getKeysFromTs(code, {
 
@@ -285,6 +287,7 @@ function getKeysFromTs(code, {
      * @param {string} cfg.property The property name
      * @param {Node} cfg.tsAnnotation The annotation node
      * @returns {boolean} Whether has a traverseable type
+     * @throws {Error} If it finds an unknown type.
      */
     function hasValidType({ property, tsAnnotation }) {
         const tsPropertyType = tsAnnotation.type;
@@ -302,7 +305,6 @@ function getKeysFromTs(code, {
                 // Ok, but not sufficient
                 return false;
             case "TSUnionType":
-                // eslint-disable-next-line no-use-before-define -- Circular
                 return tsAnnotation.types.some(annType => hasValidType({
                     property: "type",
                     tsAnnotation: annType
@@ -316,6 +318,7 @@ function getKeysFromTs(code, {
      * Whether the interface has a valid type ancestor
      * @param {string} interfaceName The interface to check
      * @returns {void}
+     * @throws {Error} If it finds an unknown type.
      */
     function hasValidTypeAncestor(interfaceName) {
         let decl = findTsInterfaceDeclaration(interfaceName);
@@ -515,16 +518,13 @@ function getKeysFromTs(code, {
 }
 
 /**
- * @typedef {{tsInterfaceDeclarations: {
- *   allTsInterfaceDeclarations: {
- *     Node[],
- *     keys: KeysStrict
- *   },
- *   exportedTsInterfaceDeclarations:
- *     Node[],
- *     keys: KeysStrict
+ * @typedef {{
+ *   keys: KeysStrict,
+ *   tsInterfaceDeclarations: {
+ *     allTsInterfaceDeclarations: Node[],
+ *     exportedTsInterfaceDeclarations: Node[]
  *   }
- * }}} VisitorKeysExport
+ * }} VisitorKeysExport
  */
 
 /**
