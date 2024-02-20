@@ -10,6 +10,9 @@ export default [
     },
     ...eslintConfigESLint,
     {
+        linterOptions: {
+            reportUnusedDisableDirectives: "error"
+        },
         settings: {
             jsdoc: {
                 preferredTypes: {
