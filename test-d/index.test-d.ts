@@ -1,9 +1,12 @@
 import { expectType, expectAssignable, expectError } from 'tsd';
 
-import { KEYS, getKeys, unionWith, VisitorKeys } from "../";
+import { KEYS, getKeys, unionWith, VisitorKeys, VisitorKeyTypes } from "../";
+import { KeyOfUnion } from '../lib/types';
 
 const assignmentExpression = {
+    _something: true,
     type: "AssignmentExpression",
+    parent: 'abc',
     operator: "=",
     left: {
         type: "Identifier",
@@ -25,30 +28,44 @@ const assignmentExpression = {
     range: [
         0,
         5
-    ]
+    ],
+    leadingComments: 'abc',
+    trailingComments: 'abc'
 };
 
-expectType<{readonly [type: string]: readonly string[]}>(KEYS);
+const readOnlyStringKeyedObject: {
+    readonly [type: string]: readonly string[]
+} = {
+    TestInterface1: ["left", "right"],
+    TestInterface2: ["expression"]
+};
 
-expectType<readonly string[]>(getKeys(assignmentExpression));
+expectAssignable<{readonly [type: string]: readonly string[]}>(KEYS);
+expectAssignable<VisitorKeys>(KEYS);
+expectAssignable<VisitorKeys<VisitorKeyTypes, import("estree").Node | import("estree-jsx").Node>>(KEYS);
+expectAssignable<Record<VisitorKeyTypes, ReadonlyArray<KeyOfUnion<import("estree").Node> | KeyOfUnion<import("estree-jsx").Node>>>>(KEYS);
 
-expectType<{readonly [type: string]: readonly string[]}>(unionWith({
+expectType<readonly ["elements"]>(KEYS.ArrayPattern);
+
+expectType<readonly ("type" | "operator" | "left" | "right" | "range")[]>(getKeys(assignmentExpression));
+expectAssignable<readonly string[]>(getKeys(assignmentExpression));
+expectType<readonly string[]>(getKeys(readOnlyStringKeyedObject));
+
+expectType<Readonly<Record<VisitorKeyTypes | "TestInterface1" | "TestInterface2", readonly string[]>>>(unionWith({
     TestInterface1: ["left", "right"],
     TestInterface2: ["expression"]
 }));
+expectAssignable<{readonly [type: string]: readonly string[]}>(unionWith({
+    TestInterface1: ["left", "right"],
+    TestInterface2: ["expression"]
+}));
+expectType<Readonly<Record<string, readonly string[]>>>(unionWith(readOnlyStringKeyedObject));
 
-const readonlyKeys: {
-    readonly [type: string]: readonly string[]
-} = {
-    TestInterface1: ["left", "right"]
-};
+expectAssignable<VisitorKeys>(readOnlyStringKeyedObject);
 
-expectAssignable<VisitorKeys>(readonlyKeys);
-
-// https://github.com/SamVerschueren/tsd/issues/143
-// expectError(() => {
-//     const erring: VisitorKeys = {
-//         TestInterface1: ["left", "right"]
-//     };
-//     erring.TestInterface1 = ["badAttemptOverwrite"];
-// });
+expectError(() => {
+    const erring: VisitorKeys = {
+        TestInterface1: ["left", "right"]
+    };
+    erring.TestInterface1 = ["badAttemptOverwrite"];
+});
