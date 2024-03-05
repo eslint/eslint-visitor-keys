@@ -12,7 +12,9 @@
     "emitDeclarationOnly": true,
     "strict": true,
     "target": "es6",
-    "outDir": "dist"
+    "outDir": "dist",
+    "removeComments": true,
+    "stripInternal": true
   },
   "include": ["lib/**/*.js"],
   "exclude": ["node_modules"]

@@ -16,9 +16,10 @@
     "./package.json": "./package.json"
   },
   "files": [
-    "dist/index.d.ts",
-    "dist/visitor-keys.d.ts",
+    "dist/*.d.ts",
+    "dist/*.d.ts.map",
     "dist/eslint-visitor-keys.cjs",
+    "dist/eslint-visitor-keys.cjs.map",
     "dist/eslint-visitor-keys.d.cts",
     "lib"
   ],
@@ -39,10 +40,10 @@
     "json-diff": "^0.7.3",
     "mocha": "^9.2.1",
     "opener": "^1.5.2",
-    "rollup": "^2.70.0",
-    "rollup-plugin-dts": "^4.2.3",
-    "tsd": "^0.19.1",
-    "typescript": "^4.6.2"
+    "rollup": "^4.12.0",
+    "rollup-plugin-dts": "^6.1.0",
+    "tsd": "^0.30.7",
+    "typescript": "^5.3.3"
   },
   "scripts": {
     "build": "npm run build:cjs && npm run build:types",
