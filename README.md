@@ -35,7 +35,7 @@ const evk = require("eslint-visitor-keys")
 
 ### evk.KEYS
 
-> type: `{ [type: string]: string[] | undefined }`
+> type: `VisitorKeys<VisitorKeyTypes>`
 
 Visitor keys. This keys are frozen.
 
@@ -49,7 +49,7 @@ console.log(evk.KEYS.AssignmentExpression) // → ["left", "right"]
 
 ### evk.getKeys(node)
 
-> type: `(node: object) => string[]`
+> type: `(node: object) => FilteredKeysOf<node>[]`
 
 Get the visitor keys of a given AST node.
 
@@ -61,16 +61,17 @@ For example:
 
 ```js
 const node = {
+    _something: true,
     type: "AssignmentExpression",
     left: { type: "Identifier", name: "foo" },
-    right: { type: "Literal", value: 0 }
+    right: { type: "Literal", value: 0 },
 }
 console.log(evk.getKeys(node)) // → ["type", "left", "right"]
 ```
 
 ### evk.unionWith(additionalKeys)
 
-> type: `(additionalKeys: object) => { [type: string]: string[] | undefined }`
+> type: `(additionalKeys: object) => VisitorKeys<VisitorKeyTypes | keyof additionalKeys>`
 
 Make the union set with `evk.KEYS` and the given keys.
 
@@ -84,6 +85,56 @@ console.log(evk.unionWith({
     MethodDefinition: ["decorators"]
 })) // → { ..., MethodDefinition: ["decorators", "key", "value"], ... }
 ```
+
+## Types
+
+### VisitorKeyTypes
+
+A union of string literals representing all the keys on `evk.KEYS`:
+
+```
+"ArrayExpression" | "ArrayPattern" | ...
+```
+
+### VisitorKeys
+
+Defines the base shape of `evk.KEYS` style objects.
+
+Takes two optional inputs: `VisitorKeys<NodeTypes, Node>`
+
+* `NodeTypes` makes up the keys of `VisitorKeys`, should be the type of [ESTree] nodes
+* `Node` represents the [ESTree] nodes themselves and is used to calculate possible values of `VisitorKeys`, an array of property names which have child nodes
+
+Default inputs: `VisitorKeys<string, Record<string, unknown>>`
+
+Example: The type of `evk.KEYS` is roughly equivalent to:
+
+```ts
+VisitorKeys<VisitorKeyTypes, import("estree").Node | import("estree-jsx").Node>
+```
+
+### FilteredKeysOf\<T>
+
+Similar to `keyof T` but:
+
+* Filters away keys just like `evk.getKeys` does
+* Rather than only returning commons keys when `T` is a union it instead returns all keys
+
+Example:
+
+```ts
+FilteredKeysOf<
+  { parent: 123, abc: true, xyz: true },
+  { parent: 456, abc: true, def: true },
+>
+```
+
+equals
+
+```ts
+'abc' | 'xyz' |
+```
+
 
 ## 📰 Change log
 
