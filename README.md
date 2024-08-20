@@ -4,6 +4,9 @@
 [![Downloads/month](https://img.shields.io/npm/dm/eslint-visitor-keys.svg)](http://www.npmtrends.com/eslint-visitor-keys)
 [![Build Status](https://github.com/eslint/eslint-visitor-keys/workflows/CI/badge.svg)](https://github.com/eslint/eslint-visitor-keys/actions)
 
+> [!Important]
+> Active development for this project has moved to https://github.com/eslint/js. Please open issues/PRs there.
+
 Constants and utilities about visitor keys to traverse AST.
 
 ## 💿 Installation
